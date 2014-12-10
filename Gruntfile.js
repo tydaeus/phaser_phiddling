@@ -14,7 +14,10 @@ module.exports = function(grunt)     {
             },
             options: {
                 watch: true,
-                keepAlive: true
+                keepAlive: true,
+                browserifyOptions: {
+                    debug: true
+                }
             }
         }
     });
