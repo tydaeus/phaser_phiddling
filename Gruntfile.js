@@ -1,4 +1,4 @@
-module.exports = function(grunt)     {
+module.exports = function(grunt) {
 
     grunt.initConfig({
         pkg: grunt.file.readJSON("package.json"),
@@ -15,6 +15,8 @@ module.exports = function(grunt)     {
             options: {
                 watch: true,
                 keepAlive: false,
+                // this depends on the browser and browserify-shim config vars in package.json
+                transform: ["browserify-shim"],
                 browserifyOptions: {
                     debug: true
                 }
@@ -33,7 +35,6 @@ module.exports = function(grunt)     {
     grunt.loadNpmTasks("grunt-contrib-clean");
     grunt.loadNpmTasks("grunt-exorcise");
 
-    //grunt.registerTask("foo", ["clean"]);
     grunt.registerTask("default", ["clean", "browserify", "exorcise"]);
     grunt.registerTask("build", ["clean:build", "browserify:build", "exorcise:build"]);
 };
