@@ -10,7 +10,7 @@ module.exports = function(grunt) {
         browserify: {
             build : {
                 src: "src/app.js",
-                dest: "build/main.js"
+                dest: "build/js/main.js"
             },
             options: {
                 watch: true,
@@ -25,8 +25,25 @@ module.exports = function(grunt) {
         exorcise: {
             build: {
                 files : {
-                    "build/main.js.map" : ["build/main.js"]
+                    "build/js/main.js.map" : ["build/js/main.js"]
                 }
+            }
+        },
+        copy: {
+            build: {
+                src : ["**/*.html"],
+                expand: true,
+                dest: "build/",
+                cwd : "html/"
+            }
+        },
+        connect: {
+            build: {
+
+            },
+            options: {
+                keepalive: true,
+                base: "build"
             }
         }
     });
@@ -34,7 +51,9 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks("grunt-browserify");
     grunt.loadNpmTasks("grunt-contrib-clean");
     grunt.loadNpmTasks("grunt-exorcise");
+    grunt.loadNpmTasks("grunt-contrib-copy");
+    grunt.loadNpmTasks("grunt-contrib-connect");
 
     grunt.registerTask("default", ["clean", "browserify", "exorcise"]);
-    grunt.registerTask("build", ["clean:build", "browserify:build", "exorcise:build"]);
+    grunt.registerTask("build", ["clean:build", "browserify:build", "exorcise:build", "copy:build"]);
 };
