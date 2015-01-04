@@ -1,5 +1,5 @@
 var lib = require("./lib.js");
-var phaser = require("phaser");
+var phaser = global.Phaser;
 
 lib.doSomething();
 
