@@ -19,7 +19,8 @@ module.exports = function(grunt) {
             watch: true,
             keepAlive: false,
             browserifyOptions: {
-                debug: true
+                debug: true,
+                fullPaths: false
             }
         }
     };
@@ -73,6 +74,6 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks("grunt-contrib-connect");
 
     grunt.registerTask("default", ["clean", "browserify", "exorcise"]);
-    grunt.registerTask("build", ["clean:build", /*"copy:libs",*/ "browserify:build", "exorcise:build", "copy:build"]);
+    grunt.registerTask("build", ["clean:build", "browserify:build", "exorcise:build", "copy:build"]);
 
 };
