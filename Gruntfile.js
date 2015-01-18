@@ -66,11 +66,13 @@ module.exports = function(grunt) {
     };
 
     config.bump = {
-        //after bumping, update it so that the changelog task uses same version number
-        updateConfigs: ['pkg'],
+        options: {
+            //after bumping, update it so that the changelog task uses same version number
+            updateConfigs: ['pkg'],
 
-        // commit CHANGELOG.md as well
-        commitFiles: ['package.json', 'CHANGELOG.md']
+            // commit CHANGELOG.md as well
+            commitFiles: ['package.json', 'CHANGELOG.md']
+        }
     };
 
     grunt.initConfig(config);
