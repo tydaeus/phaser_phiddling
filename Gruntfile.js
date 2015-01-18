@@ -71,7 +71,10 @@ module.exports = function(grunt) {
             updateConfigs: ['pkg'],
 
             // commit CHANGELOG.md as well
-            commitFiles: ['package.json', 'CHANGELOG.md']
+            commitFiles: ['package.json', 'CHANGELOG.md'],
+
+            // what remote to push changes to
+            pushTo: "origin"
         }
     };
 
