@@ -65,15 +65,25 @@ module.exports = function(grunt) {
         }
     };
 
+    config.bump = {
+        //after bumping, update it so that the changelog task uses same version number
+        updateConfigs: ['pkg'],
+
+        // commit CHANGELOG.md as well
+        commitFiles: ['package.json', 'CHANGELOG.md']
+    };
+
     grunt.initConfig(config);
 
-    grunt.loadNpmTasks("grunt-browserify");
-    grunt.loadNpmTasks("grunt-contrib-clean");
-    grunt.loadNpmTasks("grunt-exorcise");
-    grunt.loadNpmTasks("grunt-contrib-copy");
-    grunt.loadNpmTasks("grunt-contrib-connect");
+    var tasks = [ "grunt-browserify", "grunt-contrib-clean", "grunt-exorcise", "grunt-contrib-copy",
+        "grunt-contrib-connect", "grunt-bump", "grunt-conventional-changelog" ];
+    
+    for (var i = 0; i < tasks.length; i++) {
+        grunt.loadNpmTasks(tasks[i]);
+    }
 
     grunt.registerTask("default", ["clean", "browserify", "exorcise"]);
     grunt.registerTask("build", ["clean:build", "browserify:build", "exorcise:build", "copy:build"]);
+    grunt.registerTask('notes', ['bump-only', 'changelog', 'bump-commit']);
 
 };
