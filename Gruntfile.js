@@ -1,5 +1,7 @@
 module.exports = function(grunt) {
 
+    var exec = require('child_process').exec;
+
     var config = {};
 
     config.pkg = grunt.file.readJSON("package.json");
@@ -89,6 +91,36 @@ module.exports = function(grunt) {
 
     grunt.registerTask("default", ["clean", "browserify", "exorcise"]);
     grunt.registerTask("build", ["clean:build", "browserify:build", "exorcise:build", "copy:build"]);
-    grunt.registerTask('notes', ['bump-only', 'changelog', 'bump-commit']);
+    grunt.registerTask('notes', ['bump-only', 'changelog', 'git-add', 'git-push']);
+
+    grunt.registerTask("git-push", "pushes current branch to server", function() {
+        var done = this.async();
+        grunt.log.writeln("starting push");
+
+        exec('git push origin && git push origin --tags', function(err, stdout, stderr) {
+            if (err) {
+                grunt.fatal('Can not push to origin:\n  ' + stderr);
+                done(false);
+            } else {
+                grunt.log.ok('Pushed to origin');
+                done();
+            }
+        });
+    });
+
+    grunt.registerTask("git-add", "stages changes in git", function() {
+        var done = this.async();
+        grunt.log.writeln("Staging changes in git");
+
+        exec("git add package.json CHANGELOG.md", function(err, stdout, stderr) {
+            if (err) {
+                grunt.fatal("Could not stage changes:\n " + stderr);
+                done(false);
+            } else {
+                grunt.log.ok("Changes staged");
+                done();
+            }
+        });
+    });
 
 };
